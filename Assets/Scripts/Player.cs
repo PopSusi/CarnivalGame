@@ -54,12 +54,18 @@ public class Player : MonoBehaviour
         canFire = true;
     }
 
-    private void OnCollision2DEnter(Collision collision){
-        if(collision.gameObject.CompareTag("Bullet")) PlayerDie();
-        if(collision.gameObject.CompareTag("Enemy")) PlayerDie();
+    private void OnCollisionEnter2D(Collision2D collision){
+        if(collision.gameObject.CompareTag("Enemy")) {
+        PlayerDie();
+        Debug.Log("yo");
+        }
     }
 
     private void BulletReturnToInactive(GameObject bullet){
         bulletsInactive.Add(bullet);
+    }
+
+    ~Player(){
+        Bullet.BulletDeactivated -= BulletReturnToInactive;
     }
 }
