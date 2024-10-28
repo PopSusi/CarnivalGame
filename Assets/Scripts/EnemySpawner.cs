@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, ISaveable
 {
+    public struct EnemySaveData{
+        int type;
+        int currentHealth;
+        Vector3 position;
+    }
     public int timeIntervalMin;
     public int timeIntervalMax;
     private int timeIntervalCurr;
@@ -14,6 +19,10 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesSpawned;
 
     public GameObject enemyBase;
+    private List<EnemySaveData> enemies = new List<EnemySaveData>();
+
+    public string SaveID {get;}
+    public JsonData SavedData {get;}
 
     // Start is called before the first frame update
     void Start()
@@ -57,5 +66,9 @@ public class EnemySpawner : MonoBehaviour
         var enemyTypes = Resources.LoadAll("EnemyTypes", typeof(SO_EnemyTypes));
         var chosenType = enemyTypes[Random.Range(0, enemyTypes.Length)];
         return (SO_EnemyTypes) chosenType;
+    }
+
+    public void LoadFromData(JsonData data){
+        return null;
     }
 }
